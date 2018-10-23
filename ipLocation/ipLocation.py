@@ -6,7 +6,7 @@
 import IPLocate
 
 test = IPLocate.IP()
-test.load_dat("/home/project/theNetWanderer/offlinedatabase/ipLocationdatabase/IP_trial_2018M09_single_WGS84.dat")
+test.load_dat("/home/db/project/theNetWanderer/offlinedatabase/ipLocationdatabase/IP_trial_2018M09_single_WGS84.dat")
 file = open("probers.txt","r")
 ipInfo = open("locationAddress.txt","w")
 iplocation = []
