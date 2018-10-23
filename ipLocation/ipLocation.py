@@ -17,16 +17,28 @@ while True:
 	if not ip:
 		break
 	result = test.locate_ip(ip)
+	print("result start")
+	print (result)
+	print("result end")
 
 	counter = 5
 	while counter <= 12:
 		iplocation.append(result[counter])
-		counter+=1
-		if counter == 8:
-			counter = counter +3
-		if counter <= 12:
-			iplocation.append(" ") #为输出的文档字符间添加空格以供再次调用
+		iplocation.append(",") #为输出的文档字符间添加空格以供再次split调用
 
+		if counter == 8:
+			iplocation.append(result[12])
+			iplocation.append(",")
+			iplocation.append(result[11])
+#			iplocation.append(",")
+#			iplocation.append(ip)
+
+		counter+=1
+
+		if counter == 9:
+			break
+
+			
 
 	print(ip, "|".join(iplocation))
 	ipInfo.writelines(iplocation)
