@@ -9,7 +9,7 @@ test = IPLocate.IP()
 test.load_dat("/home/db/project/theNetWanderer/offlinedatabase/ipLocationdatabase/IP_trial_2018M09_single_WGS84.dat")
 file = open("probers.txt","r")
 #ipInfo = open("locationAddress.txt","w")
-wFile = open("ipPreSort.txt","w")
+wFile = open("ipPreSorted.txt","w")
 iplocation = []
 
 bo = 1
