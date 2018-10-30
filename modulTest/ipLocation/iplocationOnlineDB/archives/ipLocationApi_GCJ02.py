@@ -1,6 +1,8 @@
 import urllib.request, urllib
 import ssl
 import json
+
+
 ssl._create_default_https_context = ssl._create_unverified_context
 
 ipList = open('ipPreSorted.txt','r')
@@ -50,7 +52,7 @@ dicStructureSample = {
 ####call ippuls360 ip locator api and write data into both txt and json files
 def ipLocator(i):
 	url = "https://mall.ipplus360.com/ip/locate/api"
-	data = {'key':'36M7SJersbvoYTDnXQyJmK9vDkMKMZcCGb8fub0seoPZRRS2Aj8fTrwFqzrzfB1kJ','ip':i,'coordsys':'WGS84','area':'multi'}
+	data = {'key':'36M7SJersbvoYTDnXQyJmK9vDkMKMZcCGb8fub0seoPZRRS2Aj8fTrwFqzrzfB1kJ','ip':i,'coordsys':'GCJ02','area':'multi'}
 	data = urllib.parse.urlencode(data)
 	url = url + '?' + data
 
