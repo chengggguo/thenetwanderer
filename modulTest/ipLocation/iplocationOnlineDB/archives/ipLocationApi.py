@@ -1,6 +1,8 @@
 import urllib.request, urllib
 import ssl
 import json
+
+
 ssl._create_default_https_context = ssl._create_unverified_context
 
 ipList = open('ipPreSorted.txt','r')
