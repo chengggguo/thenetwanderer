@@ -66,7 +66,7 @@ def ipLocator(i):
 	global counter
 	print("in Main api")
 	url = "https://mall.ipplus360.com/ip/locate/api"
-	data = {'key':'','ip':i,'coordsys':'WGS84','area':'multi'}
+	data = {'key':' ','ip':i,'coordsys':'WGS84','area':'multi'}
 	data = urllib.parse.urlencode(data)
 	url = url + '?' + data
 
@@ -86,7 +86,7 @@ def ipLocator(i):
 		url = "http://api.ipstack.com/"				#### AS and ISP info from ipstack
 
 		ip = i
-		data = {"access_key":""}
+		data = {"access_key":" "}
 		data = urllib.parse.urlencode(data)
 		url = url + ip + "?" + data
 
@@ -138,7 +138,7 @@ def ipLocator(i):
 		try:
 			print("in baidu api")
 			url = "http://api.map.baidu.com/geoconv/v1/"
-			data = {'coords':joinedIP,'ak':'','from':'1','to':'3'} #### from1 = WGS84 from3 = GCJ02 from5 = BD09
+			data = {'coords':joinedIP,'ak':' ','from':'1','to':'3'} #### from1 = WGS84 from3 = GCJ02 from5 = BD09
 			data = urllib.parse.urlencode(data)
 			url = url + '?' + data
 			resp_text = urllib.request.urlopen(url).read().decode('utf-8')   ####cleaner way
@@ -160,7 +160,7 @@ def ipLocator(i):
 
 		print(dataIP)
 
-#		sleep(3)
+		sleep(3)
 
 		dataJson.append(dataIP)				#### append all dictionary to dataJson then dump to the .json file by the end of code
 		
