@@ -8,13 +8,6 @@ Stages of Development
 1. modul test
 a. by taking advanage of Roya Ensafi's(2014 version) list of Chinese gateway ip address(https://ensa.fi/active-probing/), I used a offline ip location database to sort the geo-locations.
 
-*while testing the https api request got an ssl error on ubuntu, fixed by following https://blog.csdn.net/zr1076311296/article/details/75136612
-
-b.install and run the active probing program to get the list of gateways' ip address. prepare for the field research.
-
-c.a realtime tracroute program based on python3 and combining the modul a, tracing the path of gateways' geo-location in realtime.
-
-2. unity/unreal
 
 
 codes are based on python3
