@@ -10,4 +10,5 @@ a. by taking advanage of Roya Ensafi's(2014 version) list of Chinese gateway ip 
 
 
 
-codes are based on python3
+codes are based on python2.7
+take advantage from https://github.com/fqrouter/qiang/ to get the ip address of GFW probers
