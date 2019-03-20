@@ -1,0 +1,5 @@
+/node_modules
+.npm
+dist
+main.build.js
+.DS_Store
