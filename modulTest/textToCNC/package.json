@@ -9,10 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "clinc": "^1.1.4",
     "express": "^4.16.4",
     "jsdom": "^13.0.0",
-    "serialport": "^4.0.7",
+    "serialport": "^7.1.4",
     "socket.io": "^2.2.0",
     "svgcode": "^1.0.1",
     "svgpath": "^2.2.1",
