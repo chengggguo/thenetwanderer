@@ -37,7 +37,7 @@ io.on('connection', function(socket){
 
 		var gcodeData = gcode.gCode;
 		var gcodeString = "G1 F3000\nG1 X0 Y0\nM3 S1000\n";
-		var zVal = 0;
+		var zVal = -1;
 		for(var i=0; i<gcodeData.length; i++){
 			/*UNCOMMENT TO CHANGE THE VALUE OF Z*/
 			var g = gcodeData[i].includes("G1");
