@@ -17,8 +17,18 @@ const textToSVG = TextToSVG.loadSync('./fonts/simplex.ttf')
 const attributes = {fill: 'none', stroke: 'black'}
 const options = {x: 0, y: 0, fontSize: 72, anchor: 'top', attributes: attributes};
 
-/*moving the default position*/
-var counter = 0
+/*read presaved gateways's ip address */
+var rlIP = require('readline-specific')
+var LineCounterIP = 1
+var ipAdd = ' '
+// rlIP.oneline('./ipPreSorted2.txt', LineCounterIP,function(err,res){
+//   if (err) {
+//     console.error(err)
+//   }
+//   ReadIP = res
+//   console.log(ReadIP)
+
+// })
 
 /*arduino serail port(gbrl)*/
 const SerialPort = require('serialport')
@@ -30,8 +40,6 @@ var LineByLineReader = require('line-by-line')
 var serialState = new Boolean() //checking the grbl feedback
 var parser = port.pipe(new Readline({delimiter:'\n'}))
 
-// import parallel from './internal/parallel'
-// import eachOfSeries from './eachOfSeries'
 
 /*communication with the arduino(grbl)*/
 port.on('open',function(){
@@ -43,6 +51,8 @@ parser.on('data', line => {
   console.log(line)
 })
 
+/*moving the CNC to next starting position after finish one line*/
+var counter = 0
 
 /*communication with the client (error page of the browser)*/
 app.use(express.static('./'))
@@ -54,7 +64,15 @@ io.on('connection', function(socket){
   console.log('a user connected')
   /*combine the scroe and name from game*/
   var score;
-  var ipAdd = "1"; //need to be replaced
+  rlIP.oneline('./ipPreSorted2.txt', LineCounterIP,function(err,res){
+  if (err) {
+    console.error(err)
+  }
+  ipAdd = res
+  console.log(ipAdd)
+  LineCounterIP += 1
+  })
+  // var ipAdd = "192.168.0.1"; //need to be replaced
   socket.on('score', function(data){
     score = data.toString()
   });
@@ -108,7 +126,7 @@ io.on('connection', function(socket){
         gcodeString += splitSubs[0] + "Z" + zVal + "\n";
       }else if(gStart){
         splitSubs = gcodeData[i].split("9")
-        gcodeString+= splitSubs[0]+ "92 X0 Y0 Z0" + "\n"
+        gcodeString+= splitSubs[0]+ "92 X0 Y0 Z0" + "\n" //G92 sets current position as new zero
 
       }else{
         gcodeString += gcodeData[i]+"\n";
@@ -124,18 +142,9 @@ io.on('connection', function(socket){
   			console.log("GCODE Saved");
   		});
   	});
-    //port.write('GO X0 Y0\n')
-    // port.write('G0 F3000\NG0 X-320 Y0\N')///
-    // console.log('set starting position')
-    // sleep.sleep(5)
-    // console.log('starting send code')///
-    // GcodeSender()
-    setTimeout(GcodeSender,2000)
-    // console.log('code sent')///
-    // port.write('$H\n')///
-    // sleep.sleep(10)///
 
-    // socket.emit('status','F')
+    setTimeout(GcodeSender,2000)
+
     counter += 1
     setTimeout(function(){ 
       socket.emit('status','F')
