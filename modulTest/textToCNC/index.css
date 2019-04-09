@@ -7,7 +7,7 @@ html, body {
   margin: 0;
   width: 100%;
   height: 100%;
-  zoom: 160%;
+  zoom: 150%;
   overflow: hidden;
 }
 
@@ -16,7 +16,7 @@ html, body {
   z-index: 10;
   position: fixed;
   left: 30%;
-  top: 20%;
+  top: 35%;
 }
 
 #messageBox{
@@ -35,6 +35,14 @@ html, body {
   bottom: 0;
   min-width: 100%; 
   min-height: 100%;
+}
+
+#errInfo{
+  z-index: 10;
+  position: fixed;
+  left: 30%;
+  top: 50%;
+
 }
 
 .icon {

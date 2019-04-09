@@ -4,15 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
-    <title >chrome easter egg: t-rex runner</title>
+    <title >The site can't be reached</title>
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script src="index.js"></script>
+    <script type="text/javascript"> //disalbe enter key
+        window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
+    </script>
 </head>
 
 <body id="t" class="offline">
     <form id="f">
+        Please type your name:<br>
         <input type="text" id="input_id" value="">
         <input type="button" value="Submit" onclick="getDataForm()" />
     </form>
@@ -21,9 +25,24 @@
           type='video/webm;codecs="vp8, vorbis"' />
     </video>
     <div id="messageBox" class="sendmessage">
-         <h1 style="text-align: center;font-family: 'Open Sans', sans-serif;">Press Space to start</h1>
+         <h3 style="text-align: center;font-family: 'Open Sans', sans-serif;">Press Space to start</h3>
          <div class="niokbutton" onclick="okbuttonsend()"></div>
     </div>
+
+    <div id ="errInfo">
+        <h6 style="text-align: left;font-family: 'Open Sans', sans-serif;">
+            This site can't be reached<br>
+            Try:<br>
+            Checking the connection<br>
+            Checking the proxy and the firewall<br>
+            ERR_CONNECTION_REFUSED<br>
+
+        </h6>
+        
+    </div>
+
+
+
     <div id="main-frame-error" class="interstitial-wrapper">
         <div id="main-content">
             <div class="icon icon-offline" alt=""></div>
