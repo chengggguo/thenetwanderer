@@ -21,14 +21,7 @@ const options = {x: 0, y: 0, fontSize: 72, anchor: 'top', attributes: attributes
 var rlIP = require('readline-specific')
 var LineCounterIP = 1
 var ipAdd = ' '
-// rlIP.oneline('./ipPreSorted2.txt', LineCounterIP,function(err,res){
-//   if (err) {
-//     console.error(err)
-//   }
-//   ReadIP = res
-//   console.log(ReadIP)
 
-// })
 
 /*arduino serail port(gbrl)*/
 const SerialPort = require('serialport')
@@ -52,7 +45,7 @@ parser.on('data', line => {
 })
 
 /*moving the CNC to next starting position after finish one line*/
-var counter = 0
+var PosCounter = 1
 
 /*communication with the client (error page of the browser)*/
 app.use(express.static('./'))
@@ -71,6 +64,9 @@ io.on('connection', function(socket){
   ipAdd = res
   console.log(ipAdd)
   LineCounterIP += 1
+  if(LineCounterIP == 627){
+    LineCounterIP = 1
+  }
   })
   // var ipAdd = "192.168.0.1"; //need to be replaced
   socket.on('score', function(data){
@@ -97,7 +93,7 @@ io.on('connection', function(socket){
   	const svgData = textToSVG.getD(totalData, options);
 
     /*rotate the svg image and save*/
-  	var transformed = svgpath(svgData).rotate(270, 0, 0).scale(-0.06, 0.06).translate(0,0).toString();
+  	var transformed = svgpath(svgData).rotate(270, 0, 0).scale(-0.055, 0.055).translate(0,0).toString(); //modify the size and direction of gcode
   	var path = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><path fill= \"none\" stroke=\"black\" stroke-width=\"0\" d=\"" + transformed + "\"/></svg>";
 	//console.log(path);
 	fs.writeFile("./test.svg", path, function(){
@@ -108,11 +104,20 @@ io.on('connection', function(socket){
 
     /*conver the svg to gcode file and save*/
 		var gcodeData = gcode.gCode;
-    var newStart = counter*10
-    console.log('newStart' + newStart)
-		var gcodeString = "G1 F300\nG21\nM3 S1000\n";
+    var newStart = 5
+    // console.log('newStart' + newStart)
+		var gcodeString = "G1 F1500\nG21\nM3 S1000\n";
 		var zVal = -1;
-    var gcodeEnding = "M3 0\nG0 X" + newStart +" " +"Y0 Z0\n"
+    var gcodeEnding = " "
+    if (PosCounter != 33){
+      gcodeEnding = "M3 0\nG0 X" + newStart + " " + "Y0\n"
+      console.log('reach the end')
+    } else{
+      gcodeEnding = "M3 0\nG0 X10 Y0\n"
+      console.log('far from the end')
+    }
+
+
 		for(var i=0; i<gcodeData.length; i++){
 			/*UNCOMMENT TO CHANGE THE VALUE OF Z*/
 			var g = gcodeData[i].includes("G1");
@@ -123,7 +128,7 @@ io.on('connection', function(socket){
       if(g && n){
         splitSubs = gcodeData[i].split("Z");
         //console.log(splitSubs[1]);
-        gcodeString += splitSubs[0] + "Z" + zVal + "\n";
+        gcodeString += splitSubs[0] + "Z" + zVal + " " + "F150" +"\n";//set F to change the feed speed
       }else if(gStart){
         splitSubs = gcodeData[i].split("9")
         gcodeString+= splitSubs[0]+ "92 X0 Y0 Z0" + "\n" //G92 sets current position as new zero
@@ -134,6 +139,8 @@ io.on('connection', function(socket){
 			//gcodeString += gcodeData[i]+"\n"; //COMMENT WHEN CHANGING VALUE OF Z
 		}
     gcodeString = gcodeString + gcodeEnding;
+    
+    console.log('PosCounter'+PosCounter)
 
 
 
@@ -143,13 +150,15 @@ io.on('connection', function(socket){
   		});
   	});
 
-    setTimeout(GcodeSender,2000)
+    // setTimeout(GcodeSender,2000);
+    GcodeSender(function(){
+      socket.emit('status','F');
+    });
 
-    counter += 1
-    setTimeout(function(){ 
-      socket.emit('status','F')
+    // setTimeout(function(){ 
+    //   socket.emit('status','F')
 
-    },20000)
+    // },20000)
 
     // async.auto({
     //   sendGcode: function(){
@@ -174,6 +183,11 @@ io.on('connection', function(socket){
 
 
 setTimeout(ConfigSender,2000)
+// if (PosCounter == 34){
+//       ConfigSender()
+//       console.log('reach end')
+//       PosCounter = 0
+// }
 
 /*the server keep listening*/
 http.listen(3000, function(){
@@ -197,7 +211,7 @@ function SerialState(){
 
 
 /*gcode sender*/
-function GcodeSender(){
+function GcodeSender(callback){
   console.log('in GcodeSender now')
   var lr = new LineByLineReader('test.nc', {skipEmptyLines: true}),
     row = 0
@@ -218,13 +232,20 @@ function GcodeSender(){
     if (serialState){
       setTimeout(function(){
         lr.resume()
-      },300)
+      },450)
     }
   });
 
   lr.on('end',function(){
-    port.write("$H\n\r")
-    console.log('gcode file all line sent')
+//    port.write("$H\n\r")
+    PosCounter += 1
+    if (PosCounter == 34){
+      port.write("$21=1\n$H\nG0 X-320 Y0\n$21=0")
+      console.log('reach end')
+      PosCounter = 0
+    }
+    console.log('gcode file all line sent');
+    callback();
   })
   return ('finish')
 }

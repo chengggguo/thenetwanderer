@@ -1,3 +1,4 @@
+
 /* Copyright 2013 The Chromium Authors. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file. */
@@ -15,12 +16,28 @@ html, body {
   visibility: hidden;
   z-index: 10;
   position: fixed;
-  left: 30%;
+  left: 36%;
   top: 35%;
+  letter-spacing: 0.05em;
+  font: 8px/1.5 sans, Arial, sans-serif;
+  font-weight: 700;
+  color: #666;
+  /*Microsoft Yahei, "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  /* font-family: "Arial";*/
 }
+
 
 #messageBox{
   /*z-index: -10;*/
+    visibility: hidden;
+  z-index: 10;
+  position: fixed;
+  left: 36%;
+  top: 35%;
+  letter-spacing: 0.05em;
+  font: 8px/1.5 sans, Arial, sans-serif;
+  font-weight: 700;
+  color: #666;
 }
 
 #main-frame-error{
@@ -33,16 +50,18 @@ html, body {
   position: fixed;
   right: 0;
   bottom: 0;
-  min-width: 100%; 
+  min-width: 100%;
   min-height: 100%;
 }
 
 #errInfo{
   z-index: 10;
   position: fixed;
-  left: 30%;
-  top: 50%;
-
+  left: 36%;
+  top: 58%;
+  font: 8px; 
+  color:#666;
+  font-family: sans, Arial, sans-serif;
 }
 
 .icon {

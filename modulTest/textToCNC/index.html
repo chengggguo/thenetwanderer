@@ -16,29 +16,28 @@
 
 <body id="t" class="offline">
     <form id="f">
-        Please type your name:<br>
-        <input type="text" id="input_id" value="">
-        <input type="button" value="Submit" onclick="getDataForm()" />
+        Please enter your name:<br>
+        <input type="text" id="input_id" value="" maxlength="12" style="width:125px; padding:5px 5px; border: 0.8px solid #666; font-size: 7px;color:#666; font-family: sans, Arial, sans-serif; font-weight: 700;">
+        <input type="button" value="Submit" onclick="getDataForm()" style="padding:5px 5px; border:0.8px solid #666; font-size: 7px;color:#666;font-family: sans, Arial, sans-serif; font-weight: 700;">
     </form>
     <video id="myVideo" controls style="width:640px;height:360px;">
-        <source src="assets/small.webm" 
+        <source src="assets/footage/0.mp4" 
           type='video/webm;codecs="vp8, vorbis"' />
     </video>
     <div id="messageBox" class="sendmessage">
-         <h3 style="text-align: center;font-family: 'Open Sans', sans-serif;">Press Space to start</h3>
+<!--    <h3 style="text-align: center;">Press Space to start</h3> -->
          <div class="niokbutton" onclick="okbuttonsend()"></div>
     </div>
 
     <div id ="errInfo">
-        <h6 style="text-align: left;font-family: 'Open Sans', sans-serif;">
-            This site can't be reached<br>
-            Try:<br>
-            Checking the connection<br>
-            Checking the proxy and the firewall<br>
-            ERR_CONNECTION_REFUSED<br>
-
-        </h6>
-        
+    <!--<img src="sitecantbereached.png" width="135">-->
+        <p style="font-size: 11px; font-weight:400;">This site can't be reached</p>
+        <p style="font-size: 7px; font-weight:400; margin-bottom: -5px">Try:</p>
+        <ul style="font-size: 7px;font-weight:400; line-height:1.5;padding:0 0 0 3em;">
+            <li>Checking the connection</li>
+            <li>Checking the proxy and the firewall</li>
+        </ul>
+        <p style="font-size: 6px;font-weight:400;">ERR_CONNECTION_REFUSED</p>
     </div>
 
 
@@ -87,13 +86,20 @@
   //  "name":"GC", 
   //  "score": "89"
   // });
+function getRandomArbitrary(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
 
 function getDataForm(){
     var username = document.getElementById('input_id').value;
     var form = document.getElementById("f");
     form.style.visibility = "hidden";
     socket.emit('user', username);//This goes in your game when the user looses
-    var vid = document.getElementById("myVideo");
+    var vid = document.getElementById("myVideo");//play radom video after game
+    var randVid = getRandomArbitrary(0,6); //(inclusive, exclusive)
+    console.log(randVid);
+    vid.setAttribute("src", "assets/footage"+randVid+".webm");
     vid.style.visibility = "visible";
     vid.play();
     //console.log(distanceMeter.getActualDistance(Math.ceil(distanceRan)))
