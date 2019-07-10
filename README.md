@@ -6,5 +6,6 @@ The Net Wanderer seeks to reveal the entanglement of technology, culture and ide
 the text to CNC is built for linux OS, if running on windows 10, "canvas" need to be installed.
 
 to install canvas module on windows, need Visual C++, python2.7, node-gyp, GTK package.
+(www.cnblogs.com/virtual/3661592.html)
 
 before running on windows, need to reinstall the serialport module to fit windows os
