@@ -3,12 +3,8 @@ The Net Wanderer seeks to reveal the entanglement of technology, culture and ide
 
 
 -----
-Stages of Development
+the text to CNC is built for linux OS, if running on windows 10, "canvas" need to be installed.
 
-1. modul test
-a. by taking advanage of Roya Ensafi's(2014 version) list of Chinese gateway ip address(https://ensa.fi/active-probing/), I used a offline ip location database to sort the geo-locations.
+to install canvas module on windows, need Visual C++, python2.7, node-gyp, GTK package.
 
-
-
-codes are based on python2.7
-take advantage from https://github.com/fqrouter/qiang/ to get the ip address of GFW probers
+before running on windows, need to reinstall the serialport module to fit windows os
