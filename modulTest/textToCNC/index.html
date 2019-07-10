@@ -21,8 +21,8 @@
         <input type="button" value="Submit" onclick="getDataForm()" style="padding:5px 5px; border:0.8px solid #666; font-size: 7px;color:#666;font-family: sans, Arial, sans-serif; font-weight: 700;">
     </form>
     <video id="myVideo" controls style="width:640px;height:360px;">
-        <source src="assets/footage/0.mp4" 
-          type='video/webm;codecs="vp8, vorbis"' />
+<!--         <source src="assets/footage/0.webm" 
+          type='video/webm;codecs="vp8, vorbis"' /> -->
     </video>
     <div id="messageBox" class="sendmessage">
 <!--    <h3 style="text-align: center;">Press Space to start</h3> -->
@@ -97,9 +97,9 @@ function getDataForm(){
     form.style.visibility = "hidden";
     socket.emit('user', username);//This goes in your game when the user looses
     var vid = document.getElementById("myVideo");//play radom video after game
-    var randVid = getRandomArbitrary(0,6); //(inclusive, exclusive)
+    var randVid = getRandomArbitrary(0,1); //(inclusive, exclusive)
     console.log(randVid);
-    vid.setAttribute("src", "assets/footage"+randVid+".webm");
+    vid.setAttribute("src", "assets/footage/"+randVid+".webm");
     vid.style.visibility = "visible";
     vid.play();
     //console.log(distanceMeter.getActualDistance(Math.ceil(distanceRan)))
